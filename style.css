@@ -8,6 +8,14 @@ body {
     background: black;
 }
 
+
+#canvas {
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 h1 {
     position: absolute;
     top: 50%;

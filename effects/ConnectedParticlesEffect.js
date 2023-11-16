@@ -49,7 +49,7 @@ class Effect {
         }
     }
 
-    animateParticles() {
+    animate() {
         this.particles.forEach( (particle, index) => {
             this.connectNearParticles(index)
             particle.update()
@@ -73,6 +73,10 @@ class Effect {
             }
         }
     }
+
+    clear() {
+        this.context.clearRect(0, 0, this.width, this.height)
+    }
 }
 
 /**
@@ -87,7 +91,6 @@ export function createConnectedParticlesEffect(
     context = undefined, 
     numberOfParticles = 100
 ) {  
-    console.log(typeof(1))
     return new Effect(
         canvas, 
         context === undefined ? canvas.getContext('2d') : context, 

@@ -4,16 +4,23 @@ import { createConnectedParticlesEffect } from "./effects/ConnectedParticlesEffe
 
 
 const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
+const canvas2 = document.getElementById('canvas2');
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 200 //window.innerWidth
+canvas.height = 200 //window.innerHeight
 
-const effect = createConnectedParticlesEffect(canvas, context, 100)
+canvas2.width = 200
+canvas2.height = 200
+
+const effects = []
+effects.push(createConnectedParticlesEffect(canvas, undefined, 15))
+effects.push(createConnectedParticlesEffect(canvas2, undefined, 15))
 
 function animate() {
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    effect.animateParticles()
-    // requestAnimationFrame(animate)
+    effects.forEach(effect => {
+        effect.clear()
+        effect.animate()
+    })
+    requestAnimationFrame(animate)
 }
-// animate()
+animate()

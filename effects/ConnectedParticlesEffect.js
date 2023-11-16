@@ -75,6 +75,22 @@ class Effect {
     }
 }
 
-export function createConnectedParticlesEffect(canvas, context, numberOfParticles) {
-    return new Effect(canvas, context, numberOfParticles)
+/**
+ * 
+ * @param {Canvas} canvas with defined width and height to draw inside
+ * @param {CanvasRenderingContext2D} context if undefined, will create new one based on canvas 
+ * @param {number} numberOfParticles by default 100
+ * @returns {Effect}
+ */
+export function createConnectedParticlesEffect(
+    canvas, 
+    context = undefined, 
+    numberOfParticles = 100
+) {  
+    console.log(typeof(1))
+    return new Effect(
+        canvas, 
+        context === undefined ? canvas.getContext('2d') : context, 
+        numberOfParticles
+    )
 }

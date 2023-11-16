@@ -9,7 +9,7 @@ canvas.height = window.innerHeight
 class Particle {
     constructor(effect) {
         this.effect = effect
-        this.radius = 1 
+        this.radius = 1
 
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2)  
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2) 
@@ -43,6 +43,7 @@ class Effect {
         this.minDistanceBetweenParticles = 100
         this.context.fillStyle = "white"
         this.context.strokeStyle = "white"
+        this.context.lineWidth = 0.5
 
         this.particles = []
         this.createParticles(numberOfParticles)
@@ -88,9 +89,21 @@ class Effect {
 
 const effect = new Effect(canvas, context, 200)
 
-function animate() {
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    effect.animateParticles()
+var interval = 1_000/60
+var timer = 0
+var lastTime = 0
+var deltaTime = 0
+
+function animate(timeStamp) {
+    deltaTime = timeStamp - lastTime
+    lastTime = timeStamp
+    if (timer > interval) {
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        effect.animateParticles()
+        timer = 0
+    } else {
+        timer += deltaTime
+    }
     requestAnimationFrame(animate)
 }
-animate()
+animate(0)

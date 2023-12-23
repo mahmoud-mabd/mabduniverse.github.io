@@ -31,6 +31,12 @@ class Particle {
         this.y += this.vy
         if (this.y <= this.radius || this.y >= this.effect.height - this.radius) this.vy *= -1
     }
+
+    responseToWindowSizeChange() {
+        if (this.x >= this.effect.width - this.radius) this.x = this.effect.width - 2 * this.radius
+
+        if (this.y >= this.effect.height - this.radius) this.y = this.effect.height - 2 * this.radius
+    }
 }
 
 class Effect {
@@ -103,8 +109,10 @@ class Effect {
 
         this.setStyles()
 
+        this.particles.forEach( (particle) => {
+            particle.responseToWindowSizeChange()
+        } )
     }
-
 
 }
 

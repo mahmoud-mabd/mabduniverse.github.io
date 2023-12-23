@@ -41,13 +41,24 @@ class Effect {
         this.height = this.canvas.height
 
         this.minDistanceBetweenParticles = 100
-        this.context.fillStyle = "white"
-        this.context.strokeStyle = "white"
-        this.context.lineWidth = 0.5
+        this.setStyles()
 
         this.particles = []
         this.createParticles(numberOfParticles)
 
+        this.listenToResizeEvent()
+    }
+
+    setStyles() {
+        this.context.fillStyle = "white"
+        this.context.strokeStyle = "white"
+        this.context.lineWidth = 0.5
+    }
+
+    listenToResizeEvent() {
+        window.addEventListener('resize', e => {
+            this.handleWindowResize(e.target.window.innerWidth, e.target.window.innerHeight)
+        })
     }
 
     createParticles(numberOfParticles) {
@@ -81,6 +92,17 @@ class Effect {
                 this.context.restore()
             }
         }
+    }
+
+    handleWindowResize(newWidth, newHeight) {
+        this.canvas.width = newWidth
+        this.canvas.height = newHeight
+
+        this.width = newWidth
+        this.height = newHeight
+
+        this.setStyles()
+
     }
 
 

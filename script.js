@@ -11,8 +11,8 @@ class Particle {
         this.effect = effect
         this.radius = 1
 
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2)  
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2) 
+        this.x = this.radius + Math.random() * (this.effect.width() - this.radius * 2)  
+        this.y = this.radius + Math.random() * (this.effect.height() - this.radius * 2) 
 
         this.vx = Math.random() * 1 - 0.5
         this.vy = Math.random() * 1 - 0.5
@@ -26,16 +26,16 @@ class Particle {
 
     update() {
         this.x += this.vx
-        if (this.x <= this.radius || this.x >= this.effect.width - this.radius) this.vx *= -1
+        if (this.x <= this.radius || this.x >= this.effect.width() - this.radius) this.vx *= -1
 
         this.y += this.vy
-        if (this.y <= this.radius || this.y >= this.effect.height - this.radius) this.vy *= -1
+        if (this.y <= this.radius || this.y >= this.effect.height() - this.radius) this.vy *= -1
     }
 
     responseToWindowSizeChange() {
-        if (this.x >= this.effect.width - this.radius) this.x = this.effect.width - 2 * this.radius
+        if (this.x >= this.effect.width() - this.radius) this.x = this.effect.width() - 2 * this.radius
 
-        if (this.y >= this.effect.height - this.radius) this.y = this.effect.height - 2 * this.radius
+        if (this.y >= this.effect.height() - this.radius) this.y = this.effect.height() - 2 * this.radius
     }
 }
 
@@ -43,8 +43,6 @@ class Effect {
     constructor(canvas, context, numberOfParticles) {
         this.canvas = canvas
         this.context = context
-        this.width = this.canvas.width
-        this.height = this.canvas.height
 
         this.minDistanceBetweenParticles = 100
         this.setStyles()
@@ -54,6 +52,9 @@ class Effect {
 
         this.listenToResizeEvent()
     }
+
+    width() { return this.canvas.width }
+    height() { return this.canvas.height }
 
     setStyles() {
         this.context.fillStyle = "white"
@@ -103,9 +104,6 @@ class Effect {
     handleWindowResize(newWidth, newHeight) {
         this.canvas.width = newWidth
         this.canvas.height = newHeight
-
-        this.width = newWidth
-        this.height = newHeight
 
         this.setStyles()
 

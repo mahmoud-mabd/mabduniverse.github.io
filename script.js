@@ -11,8 +11,8 @@ class Particle {
         this.effect = effect
         this.radius = 1
 
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2)  
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2) 
+        this.x = this.radius + Math.random() * (this.effect.width() - this.radius * 2)  
+        this.y = this.radius + Math.random() * (this.effect.height() - this.radius * 2) 
 
         this.vx = Math.random() * 1 - 0.5
         this.vy = Math.random() * 1 - 0.5
@@ -46,7 +46,7 @@ class Particle {
             this.x = this.radius
             this.vx *= -1
         } else if (this.isOutsideRightBound()) {
-            this.x = this.effect.width - this.radius
+            this.x = this.effect.width() - this.radius
             this.vx *= -1
         }
 
@@ -56,20 +56,20 @@ class Particle {
             this.y = this.radius
             this.vy *= -1
         } else if (this.isOutsideBottomBound()) {
-            this.y = this.effect.height - this.radius
+            this.y = this.effect.height() - this.radius
             this.vy *= -1
         }
     }
 
     responseToWindowSizeChange() {
-        if (this.isOutsideRightBound()) this.x = this.effect.width - this.radius
-        if (this.isOutsideBottomBound()) this.y = this.effect.height - this.radius
+        if (this.isOutsideRightBound()) this.x = this.effect.width() - this.radius
+        if (this.isOutsideBottomBound()) this.y = this.effect.height() - this.radius
     }
 
     isOutsideLeftBound() { return this.x < this.radius }
-    isOutsideRightBound() { return this.x > this.effect.width - this.radius }
+    isOutsideRightBound() { return this.x > this.effect.width() - this.radius }
     isOutsideTopBound() { return this.y < this.radius }
-    isOutsideBottomBound() { return this.y >= this.effect.height - this.radius }
+    isOutsideBottomBound() { return this.y >= this.effect.height() - this.radius }
 
 }
 
@@ -77,8 +77,6 @@ class Effect {
     constructor(canvas, context, numberOfParticles) {
         this.canvas = canvas
         this.context = context
-        this.width = this.canvas.width
-        this.height = this.canvas.height
 
         this.minDistanceBetweenParticles = 100
         this.setStyles()
@@ -96,6 +94,9 @@ class Effect {
         this.listenToResizeEvent()
         this.listenToMouseEvents()
     }
+
+    width() { return this.canvas.width }
+    height() { return this.canvas.height }
 
     setStyles() {
         this.context.fillStyle = "white"
@@ -179,9 +180,6 @@ class Effect {
     handleWindowResize(newWidth, newHeight) {
         this.canvas.width = newWidth
         this.canvas.height = newHeight
-
-        this.width = newWidth
-        this.height = newHeight
 
         this.setStyles()
 

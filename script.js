@@ -52,7 +52,15 @@ class Effect {
         this.particles = []
         this.createParticles(numberOfParticles)
 
+        this.mouse = {
+            x: 0,
+            y: 0,
+            pressed: false,
+            radius: 100
+        }
+
         this.listenToResizeEvent()
+        this.listenToMouseEvents()
     }
 
     setStyles() {
@@ -64,6 +72,28 @@ class Effect {
     listenToResizeEvent() {
         window.addEventListener('resize', e => {
             this.handleWindowResize(e.target.window.innerWidth, e.target.window.innerHeight)
+        })
+    }
+
+    listenToMouseEvents() {
+        window.addEventListener('mousemove', e => {
+            if (this.mouse.pressed) {
+                this.mouse.x = e.x
+                this.mouse.y = e.y
+            }
+            // console.log(`mouse move: id=${e.target.id} x=${e.x}, y=${e.y}`)
+        })
+        window.addEventListener('mousedown', e => {
+            this.mouse.pressed = true
+            this.mouse.x = e.x
+            this.mouse.y = e.y
+            // console.log(`mouse down: x=${e.x}, y=${e.y}`)
+        })
+        window.addEventListener('mouseup', e => {
+            this.mouse.pressed = false
+            this.mouse.x = e.x
+            this.mouse.y = e.y
+            // console.log(`mouse up: x=${e.x}, y=${e.y}`)
         })
     }
 
@@ -81,6 +111,14 @@ class Effect {
             particle.update()
             particle.draw(this.context)
         })
+    }
+
+    drawMousePointer() {
+        if (this.mouse.pressed) {
+            context.beginPath()
+            context.arc(this.mouse.x, this.mouse.y, 20, 0, 2 * Math.PI)
+            context.fill()
+        }
     }
 
     connectNearParticles(particleIndex) {
@@ -134,6 +172,7 @@ function animate(timeStamp) {
     } else {
         timer += deltaTime
     }
+    effect.drawMousePointer()
     requestAnimationFrame(animate)
 }
 animate(0)

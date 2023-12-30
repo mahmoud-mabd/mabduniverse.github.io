@@ -8,6 +8,9 @@ body {
     background: black;
 }
 
+#caption {
+    user-select: none;
+}
 
 #canvas {
     background: black;

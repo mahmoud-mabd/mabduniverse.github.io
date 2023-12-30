@@ -93,6 +93,7 @@ class Effect {
 
         this.listenToResizeEvent()
         this.listenToMouseEvents()
+        this.listenToTouchEvents()
     }
 
     width() { return this.canvas.width }
@@ -129,6 +130,29 @@ class Effect {
             this.mouse.x = e.x
             this.mouse.y = e.y
             // console.log(`mouse up: x=${e.x}, y=${e.y}`)
+        })
+    }
+
+    listenToTouchEvents() {
+        this.canvas.addEventListener('touchstart', (event) => {
+            if (event.touches.length > 0) {
+                this.mouse.pressed = true
+                this.mouse.x = event.touches[0].clientX
+                this.mouse.y = event.touches[0].clientY
+            }
+        })
+        this.canvas.addEventListener('touchend', (event) => {
+            this.mouse.pressed = false
+            if (event.touches.length > 0) {
+                this.mouse.x = event.touches[0].clientX
+                this.mouse.y = event.touches[0].clientY
+            }
+        })
+        this.canvas.addEventListener('touchmove', (event) => {
+            if (event.touches.length > 0 && this.mouse.pressed) {
+                this.mouse.x = event.touches[0].clientX
+                this.mouse.y = event.touches[0].clientY
+            }
         })
     }
 

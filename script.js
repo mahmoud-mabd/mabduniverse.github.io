@@ -215,7 +215,7 @@ class Effect {
 }
 
 
-const effect = new Effect(canvas, context, 200)
+const effect = new Effect(canvas, context, 300)
 
 var interval = 1_000/60
 var timer = 0

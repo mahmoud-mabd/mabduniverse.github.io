@@ -217,22 +217,10 @@ class Effect {
 
 const effect = new Effect(canvas, context, 300)
 
-var interval = 1_000/60
-var timer = 0
-var lastTime = 0
-var deltaTime = 0
-
-function animate(timeStamp) {
-    deltaTime = timeStamp - lastTime
-    lastTime = timeStamp
-    if (timer > interval) {
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        effect.animateParticles()
-        timer = 0
-    } else {
-        timer += deltaTime
-    }
+function animate() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    effect.animateParticles()
     // effect.drawMousePointer()
     requestAnimationFrame(animate)
 }
-animate(0)
+animate()
